@@ -11,8 +11,8 @@ export class HomePage {
   constructor(private router: Router) { }
 
 
-  onClickTimeAttackCard() {
-
+  async onClickTimeAttackCard() {
+    await this.router.navigate(['time-atk']);
   }
 
   async onClickNormalCard() {

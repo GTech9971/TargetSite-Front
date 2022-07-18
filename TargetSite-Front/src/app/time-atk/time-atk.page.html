@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+        <ion-title>
+            TargetSite
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col>
+                <ion-text style="text-align: center;">
+                    <h1 style="font-size: 150px;">
+                        00:21
+                    </h1>
+                </ion-text>
+            </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top:30px">
+            <ion-col>
+                <ion-text style="text-align:center">
+                    <h1 style="font-size: 100px;">2/4</h1>
+                </ion-text>
+            </ion-col>
+        </ion-row>
+
+
+        <div class="table">
+            <ion-row>
+                <ion-col size="3">
+                    <app-target-time [timeScore]="'00:23'"></app-target-time>
+                </ion-col>
+                <ion-col size="3">
+                    <app-target-time></app-target-time>
+                </ion-col>
+                <ion-col size="3">
+                    <app-target-time></app-target-time>
+                </ion-col>
+                <ion-col size="3">
+                    <app-target-time [timeScore]="'00:27'"></app-target-time>
+                </ion-col>
+            </ion-row>
+        </div>
+
+
+    </ion-grid>
+
+</ion-content>

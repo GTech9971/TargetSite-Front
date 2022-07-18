@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'normal',
     loadChildren: () => import('./normal/normal.page.module').then(m => m.NormalPageModule)
+  },
+  {
+    path: 'time-atk',
+    loadChildren: () => import('./time-atk/time-atk.module').then(m => m.TimeAtkModule)
   }
 ];
 
