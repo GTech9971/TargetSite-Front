@@ -1,0 +1,14 @@
+.table {
+    width: 100%;
+    padding: 60px;
+    margin-top:90px;
+    margin-bottom: 10px; 
+    border: 1px solid #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    .table {
+         border: 1px solid #ffffff;
+    }
+  }
+

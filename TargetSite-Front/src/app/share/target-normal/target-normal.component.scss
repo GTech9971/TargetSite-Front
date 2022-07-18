@@ -1,0 +1,27 @@
+.table {
+    padding: 30px;
+     margin-bottom: 10px; 
+     border: 1px solid #000000;
+}
+
+.green-led{
+     border-radius: 50%;     
+     width: 25px;
+     height: 25px;
+     line-height: 25px;
+}
+
+.green-led-enable{
+     background-color: green;
+}
+
+.green-led-disable{
+     background-color: rgb(75, 102, 75);
+}
+
+@media (prefers-color-scheme: dark) {
+    .table {
+         border: 1px solid #ffffff;
+    }
+  }
+

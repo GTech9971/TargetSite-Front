@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      TargetSite
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid fixed style="margin-top: 10%;">
+    <ion-row>
+      <ion-col size="6">
+        <ion-card button="true" color="secondary" (click)="onClickTimeAttackCard()">
+          <ion-card-header>
+            <ion-card-title>タイムアタック</ion-card-title>
+            <ion-card-subtitle>全ての的を当てるまでの時間を競居合います。</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-card button="true" color="secondary" (click)="onClickNormalCard()">
+          <ion-card-header>
+            <ion-card-title>ノーマル</ion-card-title>
+            <ion-card-subtitle>全ての的を当てたらクリアです。</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
