@@ -39,6 +39,14 @@ export class MockTargetSiteRepository extends TargetSiteRepository {
                 IsHit: true,
             },
             {
+                DeviceId: 1,
+                IsHit: true,
+            },
+            {
+                DeviceId: 2,
+                IsHit: true,
+            },
+            {
                 DeviceId: 3,
                 IsHit: true,
             }

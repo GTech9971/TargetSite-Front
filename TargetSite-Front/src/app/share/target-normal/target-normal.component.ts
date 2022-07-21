@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { TargetModel } from "src/app/domain/model/Target.model";
 
 @Component({
     selector: 'app-target-normal',
@@ -7,13 +8,19 @@ import { Component, Input } from "@angular/core";
 })
 export class TargetNormalComponent {
 
-    /**
-     * 緑色のLEDを点灯させる
-     */
-    @Input() enableGreenLed: boolean;
+    @Input() target: TargetModel;
 
-    constructor() {
-        this.enableGreenLed = false;
+    /**
+     * LEDが点灯するかどうか
+     */
+    get enableGreenLed(): boolean {
+        if (!this.target) {
+            return false;
+        }
+
+        return this.target.IsHit;
     }
+
+    constructor() { }
 
 }

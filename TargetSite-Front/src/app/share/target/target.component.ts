@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
+import { TargetModel } from "src/app/domain/model/Target.model";
 
 @Component({
     selector: 'app-target',
@@ -6,5 +7,9 @@ import { Component } from "@angular/core";
     styleUrls: ['./target.component.scss']
 })
 export class TargetComponent {
+
+    @Input() target: TargetModel;
+
+    constructor() { }
 
 }

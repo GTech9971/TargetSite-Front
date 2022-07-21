@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { TargetModel } from "../model/Target.model";
 import { TargetSiteRepository } from "../repository/TargetSite.repository";
 
@@ -13,10 +13,21 @@ export class TargetSiteService {
     private readonly $targetListSubject: BehaviorSubject<TargetModel[]>;
     public readonly $targetListObserver: Observable<TargetModel[]>;
 
+    /** すべてのターゲットがヒットした */
+    private readonly $targetAllHitSubject: Subject<boolean>;
+    public readonly $targetAllHitObserver: Observable<boolean>;
+
+    /** シューティングの停止フラグ */
+    private isStopShooting: boolean;
+
     constructor(private repository: TargetSiteRepository) {
         this._targetList = [];
+        this.isStopShooting = false;
         this.$targetListSubject = new BehaviorSubject<TargetModel[]>([]);
         this.$targetListObserver = this.$targetListSubject.asObservable();
+
+        this.$targetAllHitSubject = new Subject<boolean>();
+        this.$targetAllHitObserver = this.$targetAllHitSubject.asObservable();
     }
 
     /**
@@ -48,33 +59,46 @@ export class TargetSiteService {
      */
     public async fetchTargetHitInfo(): Promise<void> {
         try {
-            // TODO 処理に間違いあり 全ての的に反映されない
             const hitInfo: TargetModel[] = await this.repository.getTargetHitInfo();
             this._targetList.forEach(target => {
-                const index: number = hitInfo.findIndex(hit => { return hit.DeviceId === target.DeviceId });
-                if (index > 0) {
-                    this._targetList[index].IsHit = true;
-                }
+
+                hitInfo.forEach(hit => {
+                    if (hit.DeviceId === target.DeviceId) {
+                        target.IsHit = true;
+                    }
+                });
+
             });
             this.$targetListSubject.next(this._targetList);
+
+            // 全ヒット判定
+            let hitCount: number = 0;
+            this._targetList.forEach(target => {
+                if (target.IsHit) { hitCount++; }
+            });
+
+            if (hitCount === this._targetList.length) {
+                this.$targetAllHitSubject.next(true);
+                this.$targetAllHitSubject.next(false);
+            }
+
         } catch (e) {
             throw e;
         }
     }
 
-    public isStop: boolean = false;
 
     /**
-     * TODO 仮実装
+     * シューティング開始
      */
     public async startShooting(): Promise<void> {
-        let intervalId;
+        this.isStopShooting = false;
+        let intervalId = null;
         intervalId = setInterval(async () => {
-            if (this.isStop) {
+            if (this.isStopShooting) {
                 clearInterval(intervalId);
             }
             await this.fetchTargetHitInfo();
-            console.log("a");
         }, 500);
     }
 
@@ -83,7 +107,7 @@ export class TargetSiteService {
      */
     public async stopShooting(): Promise<void> {
         try {
-            this.isStop = true;//TODO 仮実装
+            this.isStopShooting = true;
             await this.repository.stopShooting();
             this._targetList.forEach(target => {
                 target.IsHit = false;
@@ -100,6 +124,7 @@ export class TargetSiteService {
      */
     public async disconnect(): Promise<boolean> {
         try {
+            this.isStopShooting = true;
             return await this.repository.disconnect();
         } catch (e) {
             throw e;
