@@ -11,28 +11,21 @@
     <ion-grid fixed style="margin-top: 10%;">
 
         <ion-row>
-            <ion-col size="3">
-                <app-target-normal></app-target-normal>
-            </ion-col>
+            <ng-container *ngFor="let target of this.targetObserver | async">
+                <ion-col size="3">
+                    <app-target-normal></app-target-normal>
+                </ion-col>
+            </ng-container>
 
-            <ion-col size="3">
-                <app-target-normal></app-target-normal>
-            </ion-col>
-
-            <ion-col size="3">
-                <app-target-normal></app-target-normal>
-            </ion-col>
-
-            <ion-col size="3">
-                <app-target-normal></app-target-normal>
-            </ion-col>
         </ion-row>
 
         <ion-row>
             <ion-col>
                 <div class="table">
                     <ion-text style="text-align:center">
-                        <h1 style="font-size: 80px;">2/4</h1>
+                        <h1 style="font-size: 80px;">
+                            {{this.getHitCountText()}}
+                        </h1>
                     </ion-text>
                 </div>
             </ion-col>
