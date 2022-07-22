@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { TargetTimeModel } from "src/app/domain/model/TargetTime.model";
 
 @Component({
     selector: 'app-target-time',
@@ -8,9 +9,17 @@ import { Component, Input } from "@angular/core";
 export class TargetTimeComponent {
 
     /**
-     * 的にヒットした時間 mm:ss
+     * ターゲット情報
      */
-    @Input() timeScore: string;
+    @Input() target: TargetTimeModel;
 
     constructor() { }
+
+    /**
+     * ヒットしたラップ時間を取得する
+     */
+    getHitLapText(): string {
+        // TODO
+        return "";
+    }
 }

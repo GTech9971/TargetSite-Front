@@ -13,16 +13,16 @@
             <ion-col>
                 <ion-text style="text-align: center;">
                     <h1 style="font-size: 150px;">
-                        00:21
+                        {{this.getCurrentLap}}
                     </h1>
                 </ion-text>
             </ion-col>
         </ion-row>
 
-        <ion-row style="margin-top:30px">
+        <ion-row style="margin-top:10px">
             <ion-col>
                 <ion-text style="text-align:center">
-                    <h1 style="font-size: 100px;">2/4</h1>
+                    <h1 style="font-size: 100px;">{{this.getTargetHitCountText()}}</h1>
                 </ion-text>
             </ion-col>
         </ion-row>
@@ -30,18 +30,11 @@
 
         <div class="table">
             <ion-row>
-                <ion-col size="3">
-                    <app-target-time [timeScore]="'00:23'"></app-target-time>
-                </ion-col>
-                <ion-col size="3">
-                    <app-target-time></app-target-time>
-                </ion-col>
-                <ion-col size="3">
-                    <app-target-time></app-target-time>
-                </ion-col>
-                <ion-col size="3">
-                    <app-target-time [timeScore]="'00:27'"></app-target-time>
-                </ion-col>
+                <ng-container *ngFor="let target of this.targetTimeListObserver | async">
+                    <ion-col size="3">
+                        <app-target-time [target]="target"></app-target-time>
+                    </ion-col>
+                </ng-container>
             </ion-row>
         </div>
 

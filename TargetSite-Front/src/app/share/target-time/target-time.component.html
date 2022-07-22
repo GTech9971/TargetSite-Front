@@ -1,7 +1,7 @@
 <app-target>
     <ion-text color="success">
-        <h1 class="time-score" *ngIf="this.timeScore">
-            {{this.timeScore}}
+        <h1 class="time-score" *ngIf="this.target">
+            {{this.getHitLapText()}}
         </h1>
     </ion-text>
 </app-target>
