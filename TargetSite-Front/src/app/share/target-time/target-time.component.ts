@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { TargetTimeModel } from "src/app/domain/model/TargetTime.model";
+import { LapTextUtil } from "src/app/utils/LapText.util";
 
 @Component({
     selector: 'app-target-time',
@@ -19,7 +20,8 @@ export class TargetTimeComponent {
      * ヒットしたラップ時間を取得する
      */
     getHitLapText(): string {
-        // TODO
-        return "";
+        if (!this.target) { return ""; }
+        if (this.target.TimeScore.minutes === 0 && this.target.TimeScore.seconds === 0 && this.target.TimeScore.tens === 0) { return ""; }
+        return LapTextUtil.FormatLapText(this.target.TimeScore);
     }
 }

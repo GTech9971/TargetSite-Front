@@ -1,4 +1,8 @@
 <app-target>
+    <ion-text color="primary">
+        <span>DeviceId:{{this.target.DeviceId}}</span>
+    </ion-text>
+
     <ion-text color="success">
         <h1 class="time-score" *ngIf="this.target">
             {{this.getHitLapText()}}

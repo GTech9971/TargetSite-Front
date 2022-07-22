@@ -32,25 +32,25 @@ export class MockTargetSiteRepository extends TargetSiteRepository {
         ];
     }
 
+
+    private count: number = 0;
+    private target: TargetModel[] = [];
+
     async getTargetHitInfo(): Promise<TargetModel[]> {
-        return [
-            {
-                DeviceId: 0,
-                IsHit: true,
-            },
-            {
-                DeviceId: 1,
-                IsHit: true,
-            },
-            {
-                DeviceId: 2,
-                IsHit: true,
-            },
-            {
-                DeviceId: 3,
-                IsHit: true,
-            }
-        ];
+        const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+        await sleep(1000 + this.count + 1 * 123);
+
+        if (this.count === 4) {
+            this.count = 0;
+        }
+
+        this.target.push({
+            DeviceId: this.count,
+            IsHit: true
+        });
+        this.count++;
+
+        return this.target;
     }
 
     async stopShooting(): Promise<void> {

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { LapTextUtil } from "src/app/utils/LapText.util";
 import { LapModel } from "../model/Lap.model";
 import { TargetModel } from "../model/Target.model";
 import { TargetTimeModel } from "../model/TargetTime.model";
@@ -41,7 +42,7 @@ export class TargetSiteTimeAtkService {
 
     /** 現在のラップ時間を取得する */
     public getCurrentLap(): string {
-        return `${this.workLap.minutes}:${this.workLap.seconds}:${this.workLap.tens}`;
+        return LapTextUtil.FormatLapText(this.workLap);
     }
 
     /**
@@ -84,7 +85,7 @@ export class TargetSiteTimeAtkService {
             this._targetList.forEach(target => {
 
                 hitInfo.forEach(hit => {
-                    if (hit.DeviceId === target.DeviceId) {
+                    if (hit.DeviceId === target.DeviceId && target.IsHit === false) {
                         target.IsHit = true;
 
                         // ラップ情報作成
@@ -140,7 +141,10 @@ export class TargetSiteTimeAtkService {
         // ラップタイマー開始
         let lapIntervalId = null;
         lapIntervalId = setInterval(() => {
-            if (this.isStopShooting) { clearInterval(lapIntervalId); }
+            if (this.isStopShooting) {
+                clearInterval(lapIntervalId);
+                return;
+            }
 
             this.workLap.tens++;
             if (this.workLap.tens > 99) {
@@ -160,6 +164,7 @@ export class TargetSiteTimeAtkService {
         intervalId = setInterval(async () => {
             if (this.isStopShooting) {
                 clearInterval(intervalId);
+                return;
             }
             await this.fetchTargetHitInfo();
         }, 100);
@@ -172,12 +177,23 @@ export class TargetSiteTimeAtkService {
         try {
             this.isStopShooting = true;
             await this.repository.stopShooting();
-            this._targetList.forEach(target => {
-                target.IsHit = false;
-            });
         } catch (e) {
             throw e;
         }
+    }
+
+    /**
+     * ラップの初期化
+     * ターゲットのヒット情報の初期化
+     */
+    public clearData() {
+        this.workLap = { minutes: 0, seconds: 0, tens: 0 };
+        this.lastLap = { minutes: 0, seconds: 0, tens: 0 };
+        this._targetList.forEach(target => {
+            target.IsHit = false;
+            target.TimeScore = { minutes: 0, seconds: 0, tens: 0 };
+        });
+        this.$targetListSubject.next(this._targetList);
     }
 
 

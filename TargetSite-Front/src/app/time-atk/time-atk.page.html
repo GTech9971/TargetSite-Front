@@ -12,14 +12,14 @@
         <ion-row>
             <ion-col>
                 <ion-text style="text-align: center;">
-                    <h1 style="font-size: 150px;">
+                    <h1 style="font-size: 100px;">
                         {{this.getCurrentLap}}
                     </h1>
                 </ion-text>
             </ion-col>
         </ion-row>
 
-        <ion-row style="margin-top:10px">
+        <ion-row>
             <ion-col>
                 <ion-text style="text-align:center">
                     <h1 style="font-size: 100px;">{{this.getTargetHitCountText()}}</h1>
@@ -42,3 +42,37 @@
     </ion-grid>
 
 </ion-content>
+
+
+<!-- カウントダウンモーダル -->
+<ion-modal #startmodal>
+    <ng-template>
+        <ion-content>
+            <div style="height: 100%; display: flex; justify-content:center; align-items:center">
+                <ion-button (click)="onClickStartBtn()" *ngIf="this.countDown === 4" size="large">
+                    Start
+                </ion-button>
+
+                <p style="font-size: 128px;" *ngIf="this.countDown !== 4">
+                    {{this.countDown}}
+                </p>
+            </div>
+
+        </ion-content>
+    </ng-template>
+</ion-modal>
+
+<!-- 成功7モーダル -->
+<ion-modal #clearmodal (didDismiss)="onDissmiss()">
+    <ng-template>
+        <ion-content>
+            <div style="height: 100%; display: flex; justify-content:center; align-items:center">
+
+                <p style="font-size: 128px;">
+                    Clear!!
+                </p>
+            </div>
+
+        </ion-content>
+    </ng-template>
+</ion-modal>
